@@ -136,11 +136,11 @@
                     <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="font-serif text-xs font-semibold text-sand-800">📋 支出細目</h4>
-                            <button onclick="clearExpenses()" class="text-[9px] font-bold text-gray-400 hover:text-rose-500">全部清空</button>
+                            <button onclick="clearExpenses()" class="text-[9px] font-bold text-gray-400 hover:text-rose-500 font-sans">全部清空</button>
                         </div>
                         <div class="max-h-[220px] overflow-y-auto no-scrollbar"><ul id="expense-history-list" class="divide-y divide-sand-100"></ul></div>
                     </div>
-                    <div class="bg-gradient-to-br from-white to-ocean-50/50 rounded-2xl p-4 border border-ocean-200 shadow-sm">
+                    <div class="bg-gradient-to-br from-white to-ocean-50/50 rounded-2xl p-4 border border-ocean-200/50 shadow-sm">
                         <h4 class="font-serif text-xs font-semibold text-sand-800 mb-3">✨ 最佳化轉帳結算</h4>
                         <div class="max-h-[220px] overflow-y-auto no-scrollbar"><ul id="settlement-result-list" class="space-y-2"></ul></div>
                     </div>
@@ -313,6 +313,26 @@
             else { dBtn.classList.remove('hidden'); dBtn.innerText = `🗑️ 刪除 DAY ${String(appState.activeDay).padStart(2, '0')} 行程`; }
         }
 
+        // 💡 智慧時間轉換輔助函數：將 GAS 傳回的 Dec 30, 1899 ISO 時間格式轉換回 hh:mm AM/PM 格式
+        function formatTime(timeStr) {
+            if (!timeStr) return '';
+            if (typeof timeStr === 'string' && timeStr.includes('1899-12-30')) {
+                try {
+                    const date = new Date(timeStr);
+                    let hours = date.getHours();
+                    let minutes = date.getMinutes();
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12;
+                    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+                    return `${hours}:${minutesStr} ${ampm}`;
+                } catch(e) {
+                    return timeStr;
+                }
+            }
+            return timeStr;
+        }
+
         function renderDynamicItinerary() {
             const container = document.getElementById('itinerary-timeline-container'); container.innerHTML = '';
             const items = appState.itinerary[appState.activeDay] || [];
@@ -328,7 +348,7 @@
                         <div class="absolute -left-[31px] top-1.5 bg-ocean-500 w-3.5 h-3.5 rounded-full ring-4 ring-ocean-100"></div>
                         <div class="bg-white border border-sand-200 rounded-xl p-4 shadow-sm hover:shadow-md cursor-grab">
                             <div class="flex justify-between items-start mb-1.5">
-                                <span class="text-[9px] font-bold tracking-widest text-ocean-600 bg-ocean-50 px-2 py-0.5 rounded">☰ ${item.time}</span>
+                                <span class="text-[9px] font-bold tracking-widest text-ocean-600 bg-ocean-50 px-2 py-0.5 rounded">☰ ${formatTime(item.time)}</span>
                                 <div class="flex items-center gap-1.5 text-xs text-gray-400">
                                     <span>⏱ ${item.duration}</span>
                                     <button onclick="moveItineraryItem(${item.id}, -1)">▲</button><button onclick="moveItineraryItem(${item.id}, 1)">▼</button>
@@ -363,7 +383,6 @@
             activeBtn.classList.add('text-ocean-600', 'border-b-2', 'border-ocean-500');
         }
 
-        // 💡 快速切換旅伴下拉選單
         function renderPayerOptions() {
             const select = document.getElementById('expense-payer'); select.innerHTML = '';
             appState.members.forEach(m => { select.innerHTML += `<option value="${m}">${m}</option>`; });
@@ -492,19 +511,17 @@
             sanitizeAppState(); renderAll();
         }
 
-        // 💡 將本地資料打包上傳備份至 Google Sheets
+        // --- 核心同步引擎 (智慧型診斷版) ---
         async function saveState() {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
             await syncWithGAS("post");
         }
 
-        // 💡 整合「最新修改優先」機制
         async function updateAndSave() {
             appState.lastUpdated = Date.now();
             await saveState();
         }
 
-        // 💡 雲端連線實時讀寫對齊函數
         async function syncWithGAS(action = "get") {
             const badge = document.getElementById('cloud-sync-status');
             const txt = document.getElementById('cloud-status-text');
