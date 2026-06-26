@@ -53,9 +53,9 @@
     <!-- SPA NAVIGATION BAR -->
     <nav class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-sand-200 py-1 shadow-sm">
         <div class="max-w-md mx-auto px-4 flex justify-around">
-            <button onclick="switchTab('itinerary')" id="nav-itinerary" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-ocean-600 border-b-2 border-ocean-500 flex items-center gap-1.5 outline-none">Schedule</button>
-            <button onclick="switchTab('splitter')" id="nav-splitter" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none">Split the bill</button>
-            <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none">Note</button>
+            <button onclick="switchTab('itinerary')" id="nav-itinerary" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-ocean-600 border-b-2 border-ocean-500 flex items-center gap-1.5 outline-none font-sans">Schedule</button>
+            <button onclick="switchTab('splitter')" id="nav-splitter" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">Split the bill</button>
+            <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">Note</button>
         </div>
     </nav>
 
@@ -66,7 +66,7 @@
             <div class="text-center max-w-md mx-auto">
                 <h2 id="title-itinerary" class="font-serif text-xl md:text-2xl font-semibold text-sand-800">Happy Diving</h2>
                 <p id="sub-itinerary" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">Lamay Island</p>
-                <p class="text-[11px] text-gray-400 font-light mt-1.5">極簡高效純單機版，您的所有資料均安全儲存在此瀏覽器中。</p>
+                <p class="text-[11px] text-gray-400 font-light mt-1.5">可自訂天數、自由編輯、點選 ▲▼ 調整順序，同步更新！</p>
             </div>
             <div class="flex items-center justify-center gap-2 overflow-x-auto py-1 no-scrollbar max-w-xl mx-auto px-2">
                 <div id="dynamic-day-buttons" class="flex gap-2 items-center"></div>
@@ -157,7 +157,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
                 <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-serif text-xs font-semibold text-sand-800">🧳 行李清單</h3>
+                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">🧳 行李清單</h3>
                         <span id="packing-stats" class="text-[9px] bg-sand-100 text-sand-800 px-2 py-0.5 rounded-full font-bold">0 / 0</span>
                     </div>
                     <div class="flex gap-1.5 mb-4">
@@ -168,7 +168,7 @@
                 </div>
                 <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-serif text-xs font-semibold text-sand-800">🗓 待辦事項</h3>
+                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">🗓 待辦事項</h3>
                         <span id="pre-stats" class="text-[9px] bg-sand-100 text-sand-800 px-2 py-0.5 rounded-full font-bold">0 / 0</span>
                     </div>
                     <div class="flex gap-1.5 mb-4">
@@ -235,7 +235,7 @@
             <p id="confirm-modal-text" class="text-xs text-gray-500 leading-relaxed">確定繼續執行嗎？</p>
             <div class="flex gap-2 justify-end">
                 <button id="confirm-cancel" class="bg-gray-100 text-gray-500 text-xs font-bold px-4 py-2 rounded-lg font-sans">取消</button>
-                <button id="confirm-ok" class="bg-ocean-500 text-white text-xs font-bold px-4 py-2 rounded-lg font-sans">確認</button>
+                <button id="confirm-ok" class="bg-ocean-50 text-white text-xs font-bold px-4 py-2 rounded-lg font-sans">確認</button>
             </div>
         </div>
     </div>
@@ -250,12 +250,13 @@
         // 🔗 💡 【重要步驟：請在此貼上您的 GAS Web App URL】
         // 請將下方引號內的網址換成您在 Google Sheets 後台部署拿到、結尾是 /exec 的網址。
         // =========================================================================
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby4yy6NsE_Jopd5Vv6O5Cyq56pP7cHKffprVSxEmS8M0dEwUWH7Ia0w0vmM-7KQx7LxxQ/exec";
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby4yy6NsE_Jopd5Vv6O5Cyq56pP7cHKffprVSxEmS8M0dEwUWH7Ia0w0vmM-7KQx7LxxQ/exec"; 
 
         const LOCAL_STORAGE_KEY = 'wanderlust_xiaoliuqiu_standalone_v1';
 
         // 預設核心資料
         let appState = {
+            lastUpdated: 0,
             activeDay: 1,
             header: { topTag: 'Lamayisland', title: '0710-0712 Trip', desc: '2026 品元考試囉！✦ 會過嗎？不曉得' },
             sectionTitles: { itinerary: 'Happy Diving', itinerarySub: 'Lamay Island', splitter: 'Track expenses', splitterSub: 'SMART DEBT RECONCILIATION', checklist: 'Note!!!', checklistSub: 'CHECKLIST & PACKING LIST' },
@@ -275,6 +276,7 @@
             }
         };
 
+        let db = null;
         let useFirebase = false; // 這裡用作標記 GAS 成功與否
         let isSyncing = false;
 
@@ -361,6 +363,7 @@
             activeBtn.classList.add('text-ocean-600', 'border-b-2', 'border-ocean-500');
         }
 
+        // 💡 快速切換旅伴下拉選單
         function renderPayerOptions() {
             const select = document.getElementById('expense-payer'); select.innerHTML = '';
             appState.members.forEach(m => { select.innerHTML += `<option value="${m}">${m}</option>`; });
@@ -489,17 +492,19 @@
             sanitizeAppState(); renderAll();
         }
 
-        // --- 核心同步引擎 (智慧型診斷版) ---
+        // 💡 將本地資料打包上傳備份至 Google Sheets
         async function saveState() {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
             await syncWithGAS("post");
         }
 
+        // 💡 整合「最新修改優先」機制
         async function updateAndSave() {
             appState.lastUpdated = Date.now();
             await saveState();
         }
 
+        // 💡 雲端連線實時讀寫對齊函數
         async function syncWithGAS(action = "get") {
             const badge = document.getElementById('cloud-sync-status');
             const txt = document.getElementById('cloud-status-text');
@@ -596,68 +601,107 @@
 
         function importCloudData(cloudData) {
             if (!cloudData) return;
+            
+            // 💡 智慧防洗掉與覆蓋保護邏輯：讀取雲端記錄的最大天數設定與時間戳記
+            let totalDays = 1;
+            let cloudTime = 0;
             if (cloudData.config && cloudData.config.length > 0) {
                 const topTagObj = cloudData.config.find(c => c.Key === 'top_tag');
                 const titleObj = cloudData.config.find(c => c.Key === 'trip_title');
                 const descObj = cloudData.config.find(c => c.Key === 'trip_desc');
+                const totalDaysObj = cloudData.config.find(c => c.Key === 'total_days');
+                
                 appState.header = {
                     topTag: topTagObj ? topTagObj.Value : appState.header.topTag,
                     title: titleObj ? titleObj.Value : appState.header.title,
                     desc: descObj ? descObj.Value : appState.header.desc
                 };
-            }
-            if (cloudData.members && cloudData.members.length > 0) {
-                appState.members = cloudData.members.map(m => m.Name);
-            }
-            if (cloudData.itinerary) {
-                const newItinerary = {};
-                cloudData.itinerary.forEach(item => {
-                    const dayNum = Number(item.Day);
-                    if (!newItinerary[dayNum]) newItinerary[dayNum] = [];
-                    newItinerary[dayNum].push({
-                        id: Number(item.ID),
-                        time: item.Time,
-                        spot: item.Spot,
-                        duration: item.Duration,
-                        mapUrl: item.MapUrl,
-                        notes: item.Notes,
-                        sortOrder: Number(item.SortOrder)
-                    });
+                
+                if (totalDaysObj) {
+                    totalDays = Number(totalDaysObj.Value) || 1;
+                }
+                
+                // 💡 抓取雲端最大更新時間
+                cloudData.config.forEach(c => {
+                    const lu = Number(c.LastUpdated) || 0;
+                    if (lu > cloudTime) cloudTime = lu;
                 });
-                for (let day in newItinerary) {
-                    newItinerary[day].sort((a, b) => a.sortOrder - b.sortOrder);
+            }
+            
+            const localTime = appState.lastUpdated || 0;
+            
+            // 💡 本機資料豐富度檢測，避免全新或清空的雲端工作表覆蓋了本機剛打好的精美資料！
+            const isLocalRicher = (appState.expenses && appState.expenses.length > 0) || 
+                                 (Object.keys(appState.itinerary).length > 1) || 
+                                 (appState.itinerary[1] && appState.itinerary[1].length > 1) ||
+                                 (appState.members && appState.members.length > 3);
+
+            if (cloudTime > localTime) {
+                console.log("雲端資料較新，自雲端覆蓋更新本地端...");
+                if (cloudData.members && cloudData.members.length > 0) {
+                    appState.members = cloudData.members.map(m => m.Name);
                 }
-                if (Object.keys(newItinerary).length === 0) {
-                    newItinerary[1] = [];
+                if (cloudData.itinerary) {
+                    const newItinerary = {};
+                    
+                    // 💡 先使用 totalDays 將所有天數初始化為空陣列，防堵空天數切換消失 Bug
+                    for (let d = 1; d <= totalDays; d++) {
+                        newItinerary[d] = [];
+                    }
+                    
+                    cloudData.itinerary.forEach(item => {
+                        const dayNum = Number(item.Day);
+                        if (!newItinerary[dayNum]) newItinerary[dayNum] = [];
+                        newItinerary[dayNum].push({
+                            id: Number(item.ID),
+                            time: item.Time,
+                            spot: item.Spot,
+                            duration: item.Duration,
+                            mapUrl: item.MapUrl,
+                            notes: item.Notes,
+                            sortOrder: Number(item.SortOrder)
+                        });
+                    });
+                    for (let day in newItinerary) {
+                        newItinerary[day].sort((a, b) => a.sortOrder - b.sortOrder);
+                    }
+                    appState.itinerary = newItinerary;
                 }
-                appState.itinerary = newItinerary;
+                if (cloudData.expenses) {
+                    appState.expenses = cloudData.expenses.map(exp => ({
+                        id: Number(exp.ID),
+                        purpose: exp.Purpose,
+                        amount: Number(exp.Amount),
+                        payer: exp.Payer,
+                        sharedWith: exp.SharedWith ? exp.SharedWith.split(",") : []
+                    }));
+                }
+                if (cloudData.checklist) {
+                    appState.packingList = cloudData.checklist.filter(c => c.Type === "packing").map(item => ({
+                        id: Number(item.ID),
+                        text: item.Text,
+                        checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
+                    }));
+                    appState.preTripList = cloudData.checklist.filter(c => c.Type === "pre").map(item => ({
+                        id: Number(item.ID),
+                        text: item.Text,
+                        checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
+                    }));
+                }
+                appState.lastUpdated = cloudTime;
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+                renderAll();
+            } else if (cloudTime < localTime || (cloudTime === 0 && isLocalRicher)) {
+                console.log("本地資料較新或雲端為空，將本機豐富進度推送同步至 Google Sheet...");
+                saveState(); // 推送本地進度至 Google Sheets
+                renderAll();
+            } else {
+                // 時間一致，安全渲染
+                renderAll();
             }
-            if (cloudData.expenses) {
-                appState.expenses = cloudData.expenses.map(exp => ({
-                    id: Number(exp.ID),
-                    purpose: exp.Purpose,
-                    amount: Number(exp.Amount),
-                    payer: exp.Payer,
-                    sharedWith: exp.SharedWith ? exp.SharedWith.split(",") : []
-                }));
-            }
-            if (cloudData.checklist) {
-                appState.packingList = cloudData.checklist.filter(c => c.Type === "packing").map(item => ({
-                    id: Number(item.ID),
-                    text: item.Text,
-                    checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
-                }));
-                appState.preTripList = cloudData.checklist.filter(c => c.Type === "pre").map(item => ({
-                    id: Number(item.ID),
-                    text: item.Text,
-                    checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
-                }));
-            }
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
-            renderAll();
         }
 
-        // --- 控制操作邏輯 ---
+        // --- 前端按鈕操作邏輯函數 ---
         function switchDay(d) { appState.activeDay = d; renderDayTabs(); renderDynamicItinerary(); }
         function addNewDay() {
             const days = Object.keys(appState.itinerary).map(Number);
