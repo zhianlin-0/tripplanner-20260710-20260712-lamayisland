@@ -541,7 +541,7 @@
 
             try {
                 if (action === "get") {
-                    console.log("正在從 Google Sheets 撈取最新資料...");
+                    console.log("正從資料庫撈取最新資料...");
                     const response = await fetch(GAS_WEB_APP_URL);
                     
                     // 💡 如果回傳的不是 200，立刻拋出錯誤顯示於網頁
@@ -557,12 +557,12 @@
                         useFirebase = true;
                         badge.className = "inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20 backdrop-blur-sm";
                         badge.querySelector('span').className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
-                        txt.innerText = "☁️ 雲端已同步 (Google Sheets)";
+                        txt.innerText = "☁️ 雲端已同步";
                     } else {
                         throw new Error(result.message || "GAS 後台解譯失敗");
                     }
                 } else if (action === "post") {
-                    console.log("正在推送本地資料至 Google Sheets...");
+                    console.log("資料傳送中");
                     const payload = {
                         action: "sync_all",
                         state: {
@@ -589,7 +589,7 @@
                         useFirebase = true;
                         badge.className = "inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20 backdrop-blur-sm";
                         badge.querySelector('span').className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
-                        txt.innerText = "☁️ 雲端已同步 (Google Sheets)";
+                        txt.innerText = "☁️ 雲端已同步";
                     } else {
                         throw new Error(result.message || "雲端覆寫失敗");
                     }
@@ -710,7 +710,7 @@
                 renderAll();
             } else if (cloudTime < localTime || (cloudTime === 0 && isLocalRicher)) {
                 console.log("本地資料較新或雲端為空，將本機豐富進度推送同步至 Google Sheet...");
-                saveState(); // 推送本地進度至 Google Sheets
+                saveState(); // 資料傳送中
                 renderAll();
             } else {
                 // 時間一致，安全渲染
