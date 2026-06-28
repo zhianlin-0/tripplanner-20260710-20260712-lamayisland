@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhian's Trip-0710 // Enjoy 🥳</title>
+    <title>Zhian's Trip // Island Vibe 🐢</title>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        coral: { 50: '#fff0f3', 100: '#ffe5ec', 200: '#ffc2d1', 400: '#ff85a1', 500: '#f07167', 600: '#df564b' },
-                        ocean: { 50: '#f0f8ff', 100: '#e0f2fe', 400: '#00b4d8', 500: '#0096c7', 600: '#0077b6' },
-                        sand: { 50: '#f3f8fc', 100: '#eef5fa', 200: '#d7e6f3', 800: '#1d2d44' }
+                        coral: { 50: '#fff5f5', 100: '#ffe3e3', 200: '#ffc9c9', 400: '#ff8787', 500: '#f07167', 600: '#e05346' },
+                        ocean: { 50: '#f0fbfc', 100: '#e0f7fa', 400: '#22d3ee', 500: '#0096c7', 600: '#0077b6', 700: '#03045e' },
+                        sand: { 50: '#fcfaf7', 100: '#f7f4eb', 200: '#e9e3d3', 800: '#1c2541' }
                     },
                     fontFamily: { serif: ['Playfair Display', 'Noto Serif TC', 'serif'], sans: ['Montserrat', 'Noto Sans TC', 'sans-serif'] }
                 }
@@ -22,8 +23,8 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f3f8fc; color: #1d2d44; font-family: 'Montserrat', 'Noto Sans TC', sans-serif; }
-        .magazine-line { height: 1px; background: linear-gradient(90deg, transparent, #1d2d44 50%, transparent); }
+        body { background-color: #fcfaf7; color: #1c2541; font-family: 'Montserrat', 'Noto Sans TC', sans-serif; }
+        .magazine-line { height: 1px; background: linear-gradient(90deg, transparent, #0096c7 50%, transparent); }
         .custom-cb:checked + span { text-decoration: line-through; color: #94a3b8; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -31,75 +32,87 @@
 </head>
 <body class="text-sand-800 min-h-screen flex flex-col antialiased pb-20 md:pb-6">
 
-    <header class="relative overflow-hidden bg-gradient-to-b from-ocean-100 via-coral-50 to-sand-50 pt-10 pb-6 px-4 text-center border-b border-sand-200/50 shadow-sm">
+    <!-- HERO HEADER -->
+    <header class="relative overflow-hidden bg-gradient-to-b from-ocean-100 via-coral-50 to-sand-50 pt-12 pb-8 px-4 text-center border-b border-sand-200/50 shadow-sm">
         <div class="absolute top-4 right-4 z-10 flex flex-col items-end gap-1.5">
+            <!-- ☁️ 雲端同步連線指示燈 -->
             <div id="cloud-sync-status" class="inline-flex items-center gap-1.5 bg-gray-500/10 text-gray-500 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-200 backdrop-blur-sm">
                 <span class="w-2 h-2 rounded-full bg-gray-400"></span>
-                <span id="cloud-status-text">💾 本地儲存模式 (請設定 GAS 網址)</span>
+                <span id="cloud-status-text">💾 本地儲存模式</span>
             </div>
-            <button onclick="openHeaderModal()" class="bg-white/80 hover:bg-white text-ocean-600 text-[10px] font-bold px-3 py-1.5 rounded-full border border-sand-200/80 shadow-sm transition-all backdrop-blur-sm font-sans">✏️ 編輯</button>
+            <button onclick="openHeaderModal()" class="bg-white/80 hover:bg-white text-ocean-600 text-[10px] font-bold px-3 py-1.5 rounded-full border border-sand-200/80 shadow-sm transition-all backdrop-blur-sm font-sans">✏️ 編輯日常</button>
         </div>
         <div class="max-w-2xl mx-auto">
-            <span id="display-top-tag" class="text-[10px] uppercase tracking-[0.4em] text-ocean-600 font-bold block mb-2">Lamayisland</span>
+            <span id="display-top-tag" class="text-[10px] uppercase tracking-[0.5em] text-ocean-600 font-bold block mb-2">🌊 LOGGING THE SEA BREEZE</span>
             <h1 id="display-title" class="font-serif text-3xl md:text-5xl font-semibold tracking-wide text-sand-800 mb-1">0710-0712 Trip</h1>
-            <div class="magazine-line my-3 opacity-20"></div>
+            <div class="magazine-line my-3 opacity-30"></div>
             <p id="display-desc" class="text-[10px] font-medium tracking-[0.25em] text-ocean-500/80 uppercase">2026 品元考試囉！✦ 會過嗎？不曉得</p>
         </div>
     </header>
 
+    <!-- SPA NAVIGATION BAR -->
     <nav class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-sand-200 py-1 shadow-sm">
         <div class="max-w-md mx-auto px-4 flex justify-around">
-            <button onclick="switchTab('itinerary')" id="nav-itinerary" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-ocean-600 border-b-2 border-ocean-500 flex items-center gap-1.5 outline-none font-sans">Schedule</button>
-            <button onclick="switchTab('splitter')" id="nav-splitter" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">Split the bill</button>
-            <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">Note</button>
+            <button onclick="switchTab('itinerary')" id="nav-itinerary" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-ocean-600 border-b-2 border-ocean-500 flex items-center gap-1.5 outline-none font-sans">🐚 Schedule</button>
+            <button onclick="switchTab('splitter')" id="nav-splitter" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">🪙 Split bill</button>
+            <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn py-2.5 px-3 text-xs font-semibold tracking-wider text-gray-400 hover:text-ocean-600 flex items-center gap-1.5 outline-none font-sans">📝 Notebook</button>
         </div>
     </nav>
 
+    <!-- MAIN CONTAINER -->
     <main class="max-w-4xl w-full mx-auto px-3 py-6 flex-grow">
+        <!-- ================= PAGE 1: 行程頁面 ================= -->
         <section id="page-itinerary" class="page-section space-y-6">
             <div class="text-center max-w-md mx-auto">
-                <h2 id="title-itinerary" class="font-serif text-xl md:text-2xl font-semibold text-sand-800">Happy Diving</h2>
-                <p id="sub-itinerary" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">Lamay Island</p>
-                <p class="text-[11px] text-gray-400 font-light mt-1.5">可自訂天數、自由編輯、點選 ▲▼ 調整順序，同步更新！</p>
+                <h2 id="title-itinerary" class="font-serif text-xl md:text-2xl font-semibold text-sand-800 tracking-wide">Happy Diving</h2>
+                <p id="sub-itinerary" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">🐢 Lamay Island Life</p>
+                <p class="text-[11px] text-gray-400 font-light mt-1.5">點選 ▲▼ 或自由拖曳調整島嶼漫遊順序</p>
             </div>
+            
+            <!-- 小琉球天數按鈕區 -->
             <div class="flex items-center justify-center gap-2 overflow-x-auto py-1 no-scrollbar max-w-xl mx-auto px-2">
                 <div id="dynamic-day-buttons" class="flex gap-2 items-center"></div>
-                <button onclick="addNewDay()" class="shrink-0 bg-ocean-100 text-ocean-700 px-3 py-2 rounded-full text-xs font-bold border border-ocean-200">➕ 天數</button>
+                <button onclick="addNewDay()" class="shrink-0 bg-ocean-50 text-ocean-700 px-3 py-2 rounded-full text-xs font-bold border border-ocean-200 hover:bg-ocean-100 transition-colors">➕ 增加天數</button>
             </div>
+            
             <div class="flex flex-wrap justify-center gap-3">
-                <button onclick="openItineraryModal()" class="bg-gradient-to-r from-ocean-500 to-ocean-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-sm">➕ 行程</button>
+                <button onclick="openItineraryModal()" class="bg-gradient-to-r from-ocean-500 to-ocean-600 hover:from-ocean-600 hover:to-ocean-700 text-white text-xs font-semibold px-5 py-2 rounded-full shadow-sm flex items-center gap-1">📍 新增島嶼足跡</button>
                 <button id="delete-day-btn" onclick="deleteCurrentDay()" class="bg-white text-rose-500 text-xs font-semibold px-4 py-2 rounded-full border border-rose-200 shadow-sm"></button>
             </div>
-            <div class="max-w-xl mx-auto"><div class="relative pl-6 border-l border-ocean-200 space-y-6" id="itinerary-timeline-container"></div></div>
+            
+            <!-- 時間軸容器 -->
+            <div class="max-w-xl mx-auto"><div class="relative pl-6 border-l-2 border-dashed border-ocean-200 space-y-6" id="itinerary-timeline-container"></div></div>
         </section>
 
+        <!-- ================= PAGE 2: 記帳頁面 ================= -->
         <section id="page-splitter" class="page-section hidden space-y-6">
             <div class="text-center max-w-md mx-auto">
-                <h2 id="title-splitter" class="font-serif text-xl md:text-2xl font-semibold text-sand-800">Track expenses</h2>
-                <p id="sub-splitter" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">SMART DEBT RECONCILIATION</p>
+                <h2 id="title-splitter" class="font-serif text-xl md:text-2xl font-semibold text-sand-800 tracking-wide">Track expenses</h2>
+                <p id="sub-splitter" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">🪙 島上公費與聰明結算</p>
             </div>
             <div class="space-y-4 max-w-lg mx-auto">
                 <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-serif text-sm font-semibold flex items-center gap-1 text-sand-800">👥 旅伴</h3>
+                        <h3 class="font-serif text-sm font-semibold flex items-center gap-1 text-sand-800">⛵️ 浪人夥伴</h3>
                         <span id="member-count" class="text-[10px] bg-sand-100 text-sand-800 px-2 py-0.5 rounded-full font-bold">0人</span>
                     </div>
                     <div class="flex gap-1.5 mb-3">
-                        <input type="text" id="member-name-input" placeholder="旅伴姓名..." class="flex-grow text-xs border border-sand-200 rounded-lg px-3 py-1.5 bg-sand-50/50 outline-none">
-                        <button onclick="addMember()" class="bg-ocean-500 hover:bg-ocean-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs">新增</button>
+                        <input type="text" id="member-name-input" placeholder="夥伴姓名..." class="flex-grow text-xs border border-sand-200 rounded-lg px-3 py-1.5 bg-sand-50/50 outline-none">
+                        <button onclick="addMember()" class="bg-ocean-500 hover:bg-ocean-600 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition-colors">邀請</button>
                     </div>
                     <div id="member-list-container" class="flex flex-wrap gap-1.5"></div>
                 </div>
+                
                 <div class="bg-white rounded-2xl p-5 border border-sand-200 shadow-sm space-y-3 relative overflow-hidden">
-                    <h3 id="expense-form-title" class="font-serif text-sm font-semibold text-sand-800 flex items-center gap-1.5">✍️ 紀錄</h3>
+                    <h3 id="expense-form-title" class="font-serif text-sm font-semibold text-sand-800 flex items-center gap-1.5">📝 記下一筆島嶼開銷</h3>
                     <input type="hidden" id="edit-expense-id" value="">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1">開銷品項</label>
-                            <input type="text" id="expense-purpose" placeholder="民宿、浮潛等" class="w-full text-xs border border-sand-200 rounded-lg px-3 py-2 bg-sand-50/50 outline-none">
+                            <label class="block text-[10px] font-bold text-gray-400 mb-1">支出品項</label>
+                            <input type="text" id="expense-purpose" placeholder="例：麻花捲、船票、潛水" class="w-full text-xs border border-sand-200 rounded-lg px-3 py-2 bg-sand-50/50 outline-none">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1">支出總額</label>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-1">支出金額</label>
                             <input type="number" id="expense-amount" placeholder="NT$" class="w-full text-xs border border-sand-200 rounded-lg px-3 py-2 bg-sand-50/50 outline-none" oninput="autoDistributeIfEven()">
                         </div>
                     </div>
@@ -111,61 +124,63 @@
                         <div>
                             <label class="block text-[10px] font-bold text-gray-400 mb-1">分攤模式</label>
                             <select id="expense-split-mode" onchange="toggleSplitModeUI()" class="w-full text-xs border border-sand-200 rounded-lg px-2.5 py-2 bg-sand-50/50 outline-none">
-                                <option value="even">👥 平均分攤</option>
-                                <option value="custom">✍️ 手動金額</option>
+                                <option value="even">👥 大家均攤</option>
+                                <option value="custom">✍️ 手動分配</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <div class="flex justify-between items-center mb-1.5"><label class="block text-[10px] font-bold text-gray-400">分攤人員與個別金額：</label></div>
+                        <div class="flex justify-between items-center mb-1.5"><label class="block text-[10px] font-bold text-gray-400">分攤人員與金額：</label></div>
                         <div id="sharer-checkboxes-container" class="space-y-2 max-h-[200px] overflow-y-auto py-1"></div>
                     </div>
                     <div class="flex gap-2">
                         <button id="expense-cancel-btn" onclick="cancelExpenseEdit()" class="flex-1 bg-gray-100 text-gray-500 font-semibold py-2 rounded-xl text-xs hidden">取消</button>
-                        <button onclick="addExpense()" id="expense-submit-btn" class="flex-1 bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-semibold py-2 rounded-xl text-xs shadow-sm">儲存支出並計算</button>
+                        <button onclick="addExpense()" id="expense-submit-btn" class="flex-1 bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-semibold py-2 rounded-xl text-xs shadow-sm hover:from-ocean-600 hover:to-ocean-700 transition-all">儲存支出並計算</button>
                     </div>
                 </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                         <div class="flex justify-between items-center mb-3">
-                            <h4 class="font-serif text-xs font-semibold text-sand-800">📋 支出細目</h4>
-                            <button onclick="clearExpenses()" class="text-[9px] font-bold text-gray-400 hover:text-rose-500 font-sans">全部清空</button>
+                            <h4 class="font-serif text-xs font-semibold text-sand-800">📊 開銷明細</h4>
+                            <button onclick="clearExpenses()" class="text-[9px] font-bold text-gray-400 hover:text-rose-500 font-sans">全部歸零</button>
                         </div>
                         <div class="max-h-[220px] overflow-y-auto no-scrollbar"><ul id="expense-history-list" class="divide-y divide-sand-100"></ul></div>
                     </div>
                     <div class="bg-gradient-to-br from-white to-ocean-50/50 rounded-2xl p-4 border border-ocean-200/50 shadow-sm">
-                        <h4 class="font-serif text-xs font-semibold text-sand-800 mb-3">✨ 最佳化轉帳結算</h4>
+                        <h4 class="font-serif text-xs font-semibold text-sand-800 mb-3">✨ 最佳化轉帳结算</h4>
                         <div class="max-h-[220px] overflow-y-auto no-scrollbar"><ul id="settlement-result-list" class="space-y-2"></ul></div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ================= PAGE 3: 備忘頁面 ================= -->
         <section id="page-checklist" class="page-section hidden space-y-6">
             <div class="text-center max-w-md mx-auto">
-                <h2 id="title-checklist" class="font-serif text-xl md:text-2xl font-semibold text-sand-800">Note!!!</h2>
-                <p id="sub-checklist" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">CHECKLIST & PACKING LIST</p>
+                <h2 id="title-checklist" class="font-serif text-xl md:text-2xl font-semibold text-sand-800 tracking-wide">Note!!!</h2>
+                <p id="sub-checklist" class="text-[10px] text-coral-500 font-bold mt-0.5 uppercase tracking-widest">🎒 PACKING & MEMO</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
                 <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">🧳 行李清單</h3>
+                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">🧳 海島裝備檢查</h3>
                         <span id="packing-stats" class="text-[9px] bg-sand-100 text-sand-800 px-2 py-0.5 rounded-full font-bold">0 / 0</span>
                     </div>
                     <div class="flex gap-1.5 mb-4">
-                        <input type="text" id="packing-item-input" placeholder="新增行李項目..." class="flex-grow text-xs border border-sand-200 rounded-lg px-2.5 py-1.5 bg-sand-50/50 outline-none">
-                        <button onclick="addTodoItem('packing')" class="bg-sand-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs font-sans">＋</button>
+                        <input type="text" id="packing-item-input" placeholder="例：泳衣、防曬、面鏡..." class="flex-grow text-xs border border-sand-200 rounded-lg px-2.5 py-1.5 bg-sand-50/50 outline-none">
+                        <button onclick="addTodoItem('packing')" class="bg-sand-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs font-sans hover:bg-sand-700 transition-colors">＋</button>
                     </div>
                     <ul id="packing-todo-list" class="space-y-2 max-h-[250px] overflow-y-auto pr-1"></ul>
                 </div>
                 <div class="bg-white rounded-2xl p-4 border border-sand-200 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">🗓 待辦事項</h3>
+                        <h3 class="font-serif text-xs font-semibold text-sand-800 flex items-center gap-1.5">💡 行前備忘錄</h3>
                         <span id="pre-stats" class="text-[9px] bg-sand-100 text-sand-800 px-2 py-0.5 rounded-full font-bold">0 / 0</span>
                     </div>
                     <div class="flex gap-1.5 mb-4">
-                        <input type="text" id="pre-item-input" placeholder="新增待辦事項..." class="flex-grow text-xs border border-sand-200 rounded-lg px-2.5 py-1.5 bg-sand-50/50 outline-none">
-                        <button onclick="addTodoItem('pre')" class="bg-sand-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs font-sans">＋</button>
+                        <input type="text" id="pre-item-input" placeholder="例：確認東港船班時間..." class="flex-grow text-xs border border-sand-200 rounded-lg px-2.5 py-1.5 bg-sand-50/50 outline-none">
+                        <button onclick="addTodoItem('pre')" class="bg-sand-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs font-sans hover:bg-sand-700 transition-colors">＋</button>
                     </div>
                     <ul id="pre-todo-list" class="space-y-2 max-h-[250px] overflow-y-auto pr-1"></ul>
                 </div>
@@ -173,34 +188,35 @@
         </section>
     </main>
 
+    <!-- Modals -->
     <div id="header-modal" class="fixed inset-0 z-50 flex items-end justify-center bg-sand-800/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="w-full max-w-md bg-white rounded-t-3xl p-6 space-y-4 shadow-2xl transform translate-y-full transition-transform duration-300">
             <div class="flex items-center justify-between border-b border-sand-100 pb-3">
-                <h3 class="font-serif text-base font-semibold text-sand-800">✏️ 編輯文字</h3>
+                <h3 class="font-serif text-base font-semibold text-sand-800">✏️ 編輯旅程主視覺</h3>
                 <button onclick="closeHeaderModal()" class="text-gray-400 hover:text-coral-500 font-bold text-xl p-1">×</button>
             </div>
             <div class="space-y-3 text-xs">
-                <div><label class="block font-bold text-gray-400 mb-1">頂部標籤</label><input type="text" id="input-top-tag" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
+                <div><label class="block font-bold text-gray-400 mb-1">頂部小標</label><input type="text" id="input-top-tag" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
                 <div><label class="block font-bold text-gray-400 mb-1">主標題</label><input type="text" id="input-title" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
-                <div><label class="block font-bold text-gray-400 mb-1">副標題描述</label><input type="text" id="input-desc" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
+                <div><label class="block font-bold text-gray-400 mb-1">感性生活副標</label><input type="text" id="input-desc" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
             </div>
-            <button onclick="saveHeaderTexts()" class="w-full bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm font-sans">確認儲存</button>
+            <button onclick="saveHeaderTexts()" class="w-full bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm font-sans">儲存島嶼記憶</button>
         </div>
     </div>
 
     <div id="itinerary-modal" class="fixed inset-0 z-50 flex items-end justify-center bg-sand-800/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="w-full max-w-md bg-white rounded-t-3xl p-6 space-y-4 shadow-2xl transform translate-y-full transition-transform duration-300">
             <div class="flex items-center justify-between border-b border-sand-100 pb-3">
-                <h3 id="itinerary-modal-title" class="font-serif text-base font-semibold text-sand-800">✏️ 行程項目</h3>
+                <h3 id="itinerary-modal-title" class="font-serif text-base font-semibold text-sand-800">📍 寫下島嶼足跡</h3>
                 <button onclick="closeItineraryModal()" class="text-gray-400 hover:text-coral-500 font-bold text-xl p-1">×</button>
             </div>
             <input type="hidden" id="edit-itinerary-id">
             <div class="space-y-3 text-xs">
-                <div><label class="block font-bold text-gray-400 mb-1">時間 (如: 10:00 AM)</label><input type="text" id="itinerary-time" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
-                <div><label class="block font-bold text-gray-400 mb-1">景點 / 活動名稱</label><input type="text" id="itinerary-spot" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
+                <div><label class="block font-bold text-gray-400 mb-1">時間 (如: 02:30 PM)</label><input type="text" id="itinerary-time" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
+                <div><label class="block font-bold text-gray-400 mb-1">景點 / 漫遊活動</label><input type="text" id="itinerary-spot" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none" placeholder="例：花瓶岩浮潛尋龜 🐢"></div>
                 <div><label class="block font-bold text-gray-400 mb-1">預計停留時間</label><input type="text" id="itinerary-duration" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
                 <div><label class="block font-bold text-gray-400 mb-1">Google Maps 網址 (選填)</label><input type="text" id="itinerary-map" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
-                <div><label class="block font-bold text-gray-400 mb-1">旅行小叮嚀 (選填)</label><textarea id="itinerary-notes" rows="2" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none resize-none"></textarea></div>
+                <div><label class="block font-bold text-gray-400 mb-1">浪人小叮嚀 (選填)</label><textarea id="itinerary-notes" rows="2" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none resize-none" placeholder="記得帶上海龜友善防曬 🌊"></textarea></div>
             </div>
             <button onclick="saveDynamicItinerary()" class="w-full bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm font-sans">確認儲存</button>
         </div>
@@ -209,36 +225,36 @@
     <div id="todo-edit-modal" class="fixed inset-0 z-50 flex items-end justify-center bg-sand-800/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="w-full max-w-md bg-white rounded-t-3xl p-6 space-y-4 shadow-2xl transform translate-y-full transition-transform duration-300">
             <div class="flex items-center justify-between border-b border-sand-100 pb-3">
-                <h3 class="font-serif text-base font-semibold text-sand-800">✏️ 編輯項目</h3>
+                <h3 class="font-serif text-base font-semibold text-sand-800">✏️ 編輯備忘</h3>
                 <button onclick="closeTodoEditModal()" class="text-gray-400 hover:text-coral-500 font-bold text-xl p-1">×</button>
             </div>
             <input type="hidden" id="edit-todo-type"><input type="hidden" id="edit-todo-id">
             <div class="space-y-3 text-xs">
                 <div><label class="block font-bold text-gray-400 mb-1">項目名稱</label><input type="text" id="input-todo-text" class="w-full border border-sand-200 rounded-lg px-3 py-2 outline-none"></div>
             </div>
-            <button onclick="saveTodoEdit()" class="w-full bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm font-sans">儲存修改</button>
+            <button onclick="saveTodoEdit()" class="w-full bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm font-sans">確認修改</button>
         </div>
     </div>
 
     <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-sand-800/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 px-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-4 shadow-xl transform scale-95 transition-transform duration-300">
-            <h4 class="font-serif text-base font-semibold text-sand-800">⚠️ 確認執行？</h4>
-            <p id="confirm-modal-text" class="text-xs text-gray-500 leading-relaxed">確定繼續執行嗎？</p>
+            <h4 class="font-serif text-base font-semibold text-sand-800">⚠️ 確定執行此操作？</h4>
+            <p id="confirm-modal-text" class="text-xs text-gray-500 leading-relaxed">執行後無法復原喔！</p>
             <div class="flex gap-2 justify-end">
-                <button id="confirm-cancel" class="bg-gray-100 text-gray-500 hover:bg-gray-200 text-xs font-bold px-4 py-2 rounded-lg font-sans">取消</button>
-                <button id="confirm-ok" class="bg-ocean-600 text-white hover:bg-ocean-700 text-xs font-bold px-4 py-2 rounded-lg font-sans">確認</button>
+                <button id="confirm-cancel" class="bg-gray-100 text-gray-500 hover:bg-gray-200 text-xs font-bold px-4 py-2 rounded-lg font-sans">保留</button>
+                <button id="confirm-ok" class="bg-ocean-600 text-white hover:bg-ocean-700 text-xs font-bold px-4 py-2 rounded-lg font-sans">確定刪除</button>
             </div>
         </div>
     </div>
 
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-sand-800 text-white text-xs px-5 py-2.5 rounded-full shadow-xl translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-1.5 z-50">
-        <span class="text-coral-400">✦</span><span id="toast-message">操作成功！</span>
+        <span class="text-coral-400">🐢</span><span id="toast-message">海風同步成功！</span>
     </div>
 
+    <!-- JAVASCRIPT LOCAL ENGINE -->
     <script>
         // =========================================================================
         // 🔗 💡 【重要步驟：請在此貼上您的 GAS Web App URL】
-        // 請將下方引號內的網址換成您在 Google Sheets 後台部署拿到、結尾是 /exec 的網址。
         // =========================================================================
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby4yy6NsE_Jopd5Vv6O5Cyq56pP7cHKffprVSxEmS8M0dEwUWH7Ia0w0vmM-7KQx7LxxQ/exec"; 
 
@@ -248,30 +264,30 @@
         let appState = {
             lastUpdated: 0,
             activeDay: 1,
-            header: { topTag: 'Lamayisland', title: '0710-0712 Trip', desc: '2026 品元考試囉！✦ 會過嗎？不曉得' },
-            sectionTitles: { itinerary: 'Happy Diving', itinerarySub: 'Lamay Island', splitter: 'Track expenses', splitterSub: 'SMART DEBT RECONCILIATION', checklist: 'Note!!!', checklistSub: 'CHECKLIST & PACKING LIST' },
+            header: { topTag: '🌊 LOGGING THE SEA BREEZE', title: '0710-0712 Trip', desc: '2026 品元考試囉！✦ 會過嗎？不曉得' },
+            sectionTitles: { itinerary: 'Happy Diving', itinerarySub: '🐢 Lamay Island Life', splitter: 'Track expenses', splitterSub: '🪙 島上公費與聰明結算', checklist: 'Note!!!', checklistSub: '🎒 PACKING & MEMO' },
             members: ['芷嫻', '品元', '秉昱'],
             expenses: [],
             packingList: [
-                { id: 201, text: '底片電影相機 & 備用電池', checked: false },
-                { id: 202, text: '溫和尤加利防蚊液', checked: true }
+                { id: 201, text: '底片相機與海島膠捲 📸', checked: false },
+                { id: 202, text: '海龜友善防曬乳 🌊', checked: true }
             ],
             preTripList: [
-                { id: 301, text: '預約租車與保險填寫確認', checked: true }
+                { id: 301, text: '預約租機車與確認東港船票 🚢', checked: true }
             ],
             itinerary: {
                 1: [
-                    { id: 1001, time: '10:00 AM', spot: '集合起點 ✦ 白沙尾觀光漁港咖啡館', duration: '1.5 小時', mapUrl: 'https://maps.google.com', notes: '點一杯手沖咖啡，領取預租的機車。' }
+                    { id: 1001, time: '10:30 AM', spot: '島嶼起點 ✦ 白沙尾漁港牽歐兜邁 🛵', duration: '1 小時', mapUrl: 'https://maps.google.com', notes: '先去民宿放行李、喝杯海島冰咖啡！' }
                 ]
             }
         };
 
         let db = null;
-        let useFirebase = false; // 這裡用作標記 GAS 成功與否
+        let useFirebase = false;
         let isSyncing = false;
 
         function renderHeaderTexts() {
-            document.getElementById('display-top-tag').innerText = appState.header.topTag || 'Lamayisland';
+            document.getElementById('display-top-tag').innerText = appState.header.topTag || '🌊 LOGGING THE SEA BREEZE';
             document.getElementById('display-title').innerText = appState.header.title || '0710-0712 Trip';
             document.getElementById('display-desc').innerText = appState.header.desc || '';
         }
@@ -295,15 +311,15 @@
 
             days.forEach(dayNum => {
                 const isActive = dayNum === appState.activeDay;
-                let sub = dayNum === 1 ? "Gogo 海波" : dayNum === 2 ? "Diving" : "Go home";
-                container.innerHTML += `<button onclick="switchDay(${dayNum})" class="shrink-0 px-4 py-2 rounded-full text-xs font-semibold border border-sand-200 ${isActive ? 'bg-ocean-600 text-white shadow-md' : 'bg-white text-sand-800 hover:bg-sand-100'}">DAY ${String(dayNum).padStart(2, '0')}<span class="block text-[9px] font-normal ${isActive ? 'opacity-90' : 'opacity-50'}">${sub}</span></button>`;
+                let sub = dayNum === 1 ? "🌊 乘風破浪" : dayNum === 2 ? "🐢 尋找海龜" : "🌅 慢活下島";
+                if (dayNum > 3) sub = "🌴 島嶼漫遊";
+                container.innerHTML += `<button onclick="switchDay(${dayNum})" class="shrink-0 px-4 py-2 rounded-full text-xs font-semibold border border-sand-200 ${isActive ? 'bg-ocean-600 text-white shadow-md border-ocean-600' : 'bg-white text-sand-800 hover:bg-sand-100'} transition-all">DAY ${String(dayNum).padStart(2, '0')}<span class="block text-[9px] font-normal ${isActive ? 'opacity-90' : 'opacity-50'}">${sub}</span></button>`;
             });
             const dBtn = document.getElementById('delete-day-btn');
             if (days.length <= 1) dBtn.classList.add('hidden');
-            else { dBtn.classList.remove('hidden'); dBtn.innerText = `🗑️ 刪除 DAY ${String(appState.activeDay).padStart(2, '0')} 行程`; }
+            else { dBtn.classList.remove('hidden'); dBtn.innerText = `🗑️ 刪除 DAY ${String(appState.activeDay).padStart(2, '0')} 足跡`; }
         }
 
-        // 💡 智慧時間轉換輔助函數：將 GAS 傳回的 Dec 30, 1899 ISO 時間格式轉換回 hh:mm AM/PM 格式
         function formatTime(timeStr) {
             if (!timeStr) return '';
             if (typeof timeStr === 'string' && timeStr.includes('1899-12-30')) {
@@ -316,9 +332,7 @@
                     hours = hours ? hours : 12;
                     const minutesStr = minutes < 10 ? '0' + minutes : minutes;
                     return `${hours}:${minutesStr} ${ampm}`;
-                } catch(e) {
-                    return timeStr;
-                }
+                } catch(e) { return timeStr; }
             }
             return timeStr;
         }
@@ -327,21 +341,21 @@
             const container = document.getElementById('itinerary-timeline-container'); container.innerHTML = '';
             const items = appState.itinerary[appState.activeDay] || [];
             if (items.length === 0) {
-                container.innerHTML = `<div class="py-12 text-center text-xs text-gray-400 italic">📍 DAY ${String(appState.activeDay).padStart(2, '0')} 尚無行程</div>`;
+                container.innerHTML = `<div class="py-12 text-center text-xs text-gray-400 italic">🐚 DAY ${String(appState.activeDay).padStart(2, '0')} 留白中，去海邊躺平吧 🏖️</div>`;
                 return;
             }
             items.forEach((item) => {
-                let mapHtml = item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="inline-flex bg-ocean-50 text-ocean-600 px-2.5 py-1 rounded-full text-[10px] font-semibold border border-ocean-100">🗺️ 查看地圖</a>` : '';
-                let noteHtml = item.notes ? `<div class="mt-3 pt-2 border-t border-dashed border-sand-200 text-[11px] text-coral-500"><span class="font-bold">✦ 小叮嚀：</span>${item.notes}</div>` : '';
+                let mapHtml = item.mapUrl ? `<a href="${item.mapUrl}" target="_blank" class="inline-flex bg-ocean-50 text-ocean-600 px-2.5 py-1 rounded-full text-[10px] font-semibold border border-ocean-100 hover:bg-ocean-100 transition-all">🗺️ 地圖導航</a>` : '';
+                let noteHtml = item.notes ? `<div class="mt-3 pt-2 border-t border-dashed border-sand-200 text-[11px] text-coral-600"><span class="font-bold">⚓️ Memo：</span>${item.notes}</div>` : '';
                 container.innerHTML += `
                     <div class="relative group itinerary-drag-item" draggable="true" data-id="${item.id}" ondragstart="handleDragStart(event)" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" ondragend="handleDragEnd(event)">
-                        <div class="absolute -left-[31px] top-1.5 bg-ocean-500 w-3.5 h-3.5 rounded-full ring-4 ring-ocean-100"></div>
-                        <div class="bg-white border border-sand-200 rounded-xl p-4 shadow-sm hover:shadow-md cursor-grab">
+                        <div class="absolute -left-[32px] top-1.5 bg-ocean-500 w-3.5 h-3.5 rounded-full ring-4 ring-ocean-100 group-hover:bg-coral-500 group-hover:ring-coral-100 transition-all"></div>
+                        <div class="bg-white border border-sand-200 rounded-xl p-4 shadow-sm hover:shadow-md cursor-grab transition-all">
                             <div class="flex justify-between items-start mb-1.5">
-                                <span class="text-[9px] font-bold tracking-widest text-ocean-600 bg-ocean-50 px-2 py-0.5 rounded">☰ ${formatTime(item.time)}</span>
+                                <span class="text-[9px] font-bold tracking-widest text-ocean-600 bg-ocean-50 px-2 py-0.5 rounded">⏰ ${formatTime(item.time)}</span>
                                 <div class="flex items-center gap-1.5 text-xs text-gray-400">
-                                    <span>⏱ ${item.duration}</span>
-                                    <button onclick="moveItineraryItem(${item.id}, -1)">▲</button><button onclick="moveItineraryItem(${item.id}, 1)">▼</button>
+                                    <span>⏳ ${item.duration}</span>
+                                    <button onclick="moveItineraryItem(${item.id}, -1)" class="hover:text-ocean-500">▲</button><button onclick="moveItineraryItem(${item.id}, 1)" class="hover:text-ocean-500">▼</button>
                                     <button onclick="editItineraryItem(${item.id})" class="text-gray-400 hover:text-ocean-500">✏️</button>
                                     <button onclick="deleteItineraryItem(${item.id})" class="text-gray-400 hover:text-coral-500">🗑️</button>
                                 </div>
@@ -357,7 +371,7 @@
             const container = document.getElementById('member-list-container'); container.innerHTML = '';
             document.getElementById('member-count').innerText = `${appState.members.length} 人`;
             appState.members.forEach((m, idx) => {
-                container.innerHTML += `<div class="inline-flex items-center gap-1.5 bg-ocean-50 text-ocean-700 px-2.5 py-1 rounded-full text-[10px] font-semibold border border-ocean-100"><span>${m}</span><button onclick="removeMember(${idx})">×</button></div>`;
+                container.innerHTML += `<div class="inline-flex items-center gap-1.5 bg-ocean-50 text-ocean-700 px-3 py-1 rounded-full text-[10px] font-semibold border border-ocean-100"><span>🌴 ${m}</span><button onclick="removeMember(${idx})" class="hover:text-rose-500 font-bold ml-1">×</button></div>`;
             });
         }
 
@@ -394,14 +408,14 @@
         function renderExpenseHistory() {
             const list = document.getElementById('expense-history-list'); list.innerHTML = '';
             if (appState.expenses.length === 0) {
-                list.innerHTML = `<li class="py-4 text-center text-[10px] text-gray-400 italic">暫時無開銷紀錄。</li>`; return;
+                list.innerHTML = `<li class="py-4 text-center text-[10px] text-gray-400 italic">島上暫無開銷紀錄 🌴</li>`; return;
             }
             appState.expenses.slice().reverse().forEach(exp => {
                 list.innerHTML += `
                     <li class="py-2 flex justify-between items-center text-[11px]">
                         <div class="space-y-0.5 pr-2 flex-grow min-w-0">
-                            <h5 class="font-semibold text-sand-800 text-xs truncate">${exp.purpose}</h5>
-                            <p class="text-gray-400 font-light truncate"><span class="text-ocean-600 font-medium">${exp.payer}</span> 付 · ${exp.sharedWith.length}人分</p>
+                            <h5 class="font-semibold text-sand-800 text-xs truncate">🛒 ${exp.purpose}</h5>
+                            <p class="text-gray-400 font-light truncate"><span class="text-ocean-600 font-medium">${exp.payer}</span> 墊付 · ${exp.sharedWith.length} 人分擔</p>
                         </div>
                         <div class="flex items-center gap-2 shrink-0 font-bold text-coral-500">
                             <span>NT$ ${exp.amount.toLocaleString()}</span>
@@ -447,10 +461,10 @@
                 if (debtor.amount <= 0.5) i++; if (creditor.amount <= 0.5) j++;
             }
             if (transactions.length === 0) {
-                resultList.innerHTML = `<p class="text-xs text-center py-4 font-semibold text-emerald-600">金額已平帳！</p>`; return;
+                resultList.innerHTML = `<p class="text-xs text-center py-4 font-semibold text-emerald-600">💵 帳目清爽，皆已平帳！</p>`; return;
             }
             transactions.forEach(tx => {
-                resultList.innerHTML += `<li class="bg-white border p-2.5 rounded-xl flex justify-between items-center text-xs shadow-sm"><div><span class="font-bold">${tx.from}</span> <span class="text-[10px] text-gray-400">應付給</span> <span class="font-bold">${tx.to}</span></div><span class="font-bold text-coral-500 text-xs">NT$ ${tx.amount.toLocaleString()}</span></li>`;
+                resultList.innerHTML += `<li class="bg-white border p-2.5 rounded-xl flex justify-between items-center text-xs shadow-sm"><div>💰 <span class="font-bold">${tx.from}</span> <span class="text-[10px] text-gray-400">應還給</span> <span class="font-bold">${tx.to}</span></div><span class="font-bold text-coral-500 text-xs">NT$ ${tx.amount.toLocaleString()}</span></li>`;
             });
         }
 
@@ -479,8 +493,8 @@
 
         function sanitizeAppState() {
             if (!appState || typeof appState !== 'object') appState = {};
-            if (!appState.header) appState.header = { topTag: 'Lamayisland', title: '0710-0712 Trip', desc: '✦' };
-            if (!appState.sectionTitles) appState.sectionTitles = { itinerary: 'Happy Diving', itinerarySub: 'Lamay Island', splitter: 'Track expenses', splitterSub: 'SMART DEBT RECONCILIATION', checklist: 'Note!!!', checklistSub: 'CHECKLIST & PACKING LIST' };
+            if (!appState.header) appState.header = { topTag: '🌊 LOGGING THE SEA BREEZE', title: '0710-0712 Trip', desc: '✦' };
+            if (!appState.sectionTitles) appState.sectionTitles = { itinerary: 'Happy Diving', itinerarySub: '🐢 Lamay Island Life', splitter: 'Track expenses', splitterSub: '🪙 島上公費與聰明結算', checklist: 'Note!!!', checklistSub: '🎒 PACKING & MEMO' };
             if (!appState.members) appState.members = ['芷嫻', '品元', '秉昱'];
             if (!appState.expenses) appState.expenses = [];
             if (!appState.packingList) appState.packingList = [];
@@ -501,7 +515,6 @@
             sanitizeAppState(); renderAll();
         }
 
-        // --- 核心同步引擎 (智慧型診斷版) ---
         async function saveState() {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
             await syncWithGAS("post");
@@ -519,7 +532,7 @@
             if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL === "YOUR_GAS_WEB_APP_URL_HERE") {
                 useFirebase = false;
                 badge.className = "inline-flex items-center gap-1.5 bg-gray-500/10 text-gray-500 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-200 backdrop-blur-sm";
-                txt.innerText = "💾 本地儲存模式 (請設定 GAS 網址)";
+                txt.innerText = "💾 本地儲存模式";
                 return;
             }
 
@@ -527,23 +540,16 @@
             isSyncing = true;
 
             badge.className = "inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-500/20 backdrop-blur-sm animate-pulse";
-            txt.innerText = "🔄 同步中...";
+            txt.innerText = "🔄 海風同步中...";
 
             try {
                 if (action === "get") {
-                    console.log("正從資料庫撈取最新資料...");
                     const response = await fetch(GAS_WEB_APP_URL);
-                    
-                    // 💡 如果回傳的不是 200，立刻拋出錯誤顯示於網頁
-                    if (!response.ok) {
-                        throw new Error(`HTTP 錯誤! 狀態碼: ${response.status}`);
-                    }
-                    
+                    if (!response.ok) throw new Error(`HTTP 錯誤! 狀態碼: ${response.status}`);
                     const result = await response.json();
                     
                     if (result.status === "success" && result.data) {
                         importCloudData(result.data);
-                        
                         useFirebase = true;
                         badge.className = "inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20 backdrop-blur-sm";
                         badge.querySelector('span').className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
@@ -552,7 +558,6 @@
                         throw new Error(result.message || "GAS 後台解譯失敗");
                     }
                 } else if (action === "post") {
-                    console.log("資料傳送中");
                     const payload = {
                         action: "sync_all",
                         state: {
@@ -564,54 +569,36 @@
                             preTripList: appState.preTripList
                         }
                     };
-
                     const response = await fetch(GAS_WEB_APP_URL, {
                         method: "POST",
                         body: JSON.stringify(payload)
                     });
-                    
-                    if (!response.ok) {
-                        throw new Error(`POST 失敗! 狀態碼: ${response.status}`);
-                    }
-                    
+                    if (!response.ok) throw new Error(`POST 失敗! 狀態碼: ${response.status}`);
                     const result = await response.json();
                     if (result.status === "success") {
                         useFirebase = true;
                         badge.className = "inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20 backdrop-blur-sm";
                         badge.querySelector('span').className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
                         txt.innerText = "☁️ 雲端已同步";
-                    } else {
-                        throw new Error(result.message || "雲端覆寫失敗");
-                    }
+                    } else { throw new Error(result.message || "雲端覆寫失敗"); }
                 }
             } catch (error) {
                 console.error("GAS 同步連線異常:", error);
                 useFirebase = false;
-                
-                // 💡 終極優化：將精準報錯內容（如 TypeError / Cors / JSON 錯誤）直接噴在 UI 上！
                 let errorMsg = error.message || error;
                 if (errorMsg.includes("Failed to fetch")) {
-                    errorMsg = "連線被拒 (請檢查網址、CORS 權限或是否開啟匿名登入)";
-                } else if (errorMsg.includes("Unexpected token")) {
-                    errorMsg = "後台傳回 HTML 錯誤頁 (通常是試算表分頁名稱對不上、或 GAS 授權未完成)";
+                    errorMsg = "連線被拒 (請檢查網址與網路設定)";
                 }
-                
                 badge.className = "inline-flex items-center gap-1.5 bg-rose-500/10 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-rose-500/20 backdrop-blur-sm";
                 badge.querySelector('span').className = "w-2 h-2 rounded-full bg-rose-500";
                 txt.innerText = `⚠️ 同步異常: ${errorMsg}`;
-                
                 loadLocalBackup();
-            } finally {
-                isSyncing = false;
-            }
+            } finally { isSyncing = false; }
         }
 
         function importCloudData(cloudData) {
             if (!cloudData) return;
-            
-            // 💡 智慧防洗掉與覆蓋保護邏輯：讀取雲端記錄的最大天數設定與時間戳記
-            let totalDays = 1;
-            let cloudTime = 0;
+            let totalDays = 1; let cloudTime = 0;
             if (cloudData.config && cloudData.config.length > 0) {
                 const topTagObj = cloudData.config.find(c => c.Key === 'top_tag');
                 const titleObj = cloudData.config.find(c => c.Key === 'trip_title');
@@ -623,92 +610,50 @@
                     title: titleObj ? titleObj.Value : appState.header.title,
                     desc: descObj ? descObj.Value : appState.header.desc
                 };
-                
-                if (totalDaysObj) {
-                    totalDays = Number(totalDaysObj.Value) || 1;
-                }
-                
-                // 💡 抓取雲端最大更新時間
+                if (totalDaysObj) totalDays = Number(totalDaysObj.Value) || 1;
                 cloudData.config.forEach(c => {
                     const lu = Number(c.LastUpdated) || 0;
                     if (lu > cloudTime) cloudTime = lu;
                 });
             }
-            
             const localTime = appState.lastUpdated || 0;
-            
-            // 💡 本機資料豐富度檢測，避免全新或清空的雲端工作表覆蓋了本機剛打好的精美資料！
             const isLocalRicher = (appState.expenses && appState.expenses.length > 0) || 
                                  (Object.keys(appState.itinerary).length > 1) || 
                                  (appState.itinerary[1] && appState.itinerary[1].length > 1) ||
                                  (appState.members && appState.members.length > 3);
 
             if (cloudTime > localTime) {
-                console.log("雲端資料較新，自雲端覆蓋更新本地端...");
-                if (cloudData.members && cloudData.members.length > 0) {
-                    appState.members = cloudData.members.map(m => m.Name);
-                }
+                if (cloudData.members && cloudData.members.length > 0) appState.members = cloudData.members.map(m => m.Name);
                 if (cloudData.itinerary) {
                     const newItinerary = {};
-                    
-                    // 💡 先使用 totalDays 將所有天數初始化為空陣列，防堵空天數切換消失 Bug
-                    for (let d = 1; d <= totalDays; d++) {
-                        newItinerary[d] = [];
-                    }
-                    
+                    for (let d = 1; d <= totalDays; d++) { newItinerary[d] = []; }
                     cloudData.itinerary.forEach(item => {
                         const dayNum = Number(item.Day);
                         if (!newItinerary[dayNum]) newItinerary[dayNum] = [];
                         newItinerary[dayNum].push({
-                            id: Number(item.ID),
-                            time: item.Time,
-                            spot: item.Spot,
-                            duration: item.Duration,
-                            mapUrl: item.MapUrl,
-                            notes: item.Notes,
-                            sortOrder: Number(item.SortOrder)
+                            id: Number(item.ID), time: item.Time, spot: item.Spot, duration: item.Duration, mapUrl: item.MapUrl, notes: item.Notes, sortOrder: Number(item.SortOrder)
                         });
                     });
-                    for (let day in newItinerary) {
-                        newItinerary[day].sort((a, b) => a.sortOrder - b.sortOrder);
-                    }
+                    for (let day in newItinerary) { newItinerary[day].sort((a, b) => a.sortOrder - b.sortOrder); }
                     appState.itinerary = newItinerary;
                 }
                 if (cloudData.expenses) {
                     appState.expenses = cloudData.expenses.map(exp => ({
-                        id: Number(exp.ID),
-                        purpose: exp.Purpose,
-                        amount: Number(exp.Amount),
-                        payer: exp.Payer,
-                        sharedWith: exp.SharedWith ? exp.SharedWith.split(",") : []
+                        id: Number(exp.ID), purpose: exp.Purpose, amount: Number(exp.Amount), payer: exp.Payer, sharedWith: exp.SharedWith ? exp.SharedWith.split(",") : []
                     }));
                 }
                 if (cloudData.checklist) {
-                    appState.packingList = cloudData.checklist.filter(c => c.Type === "packing").map(item => ({
-                        id: Number(item.ID),
-                        text: item.Text,
-                        checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
-                    }));
-                    appState.preTripList = cloudData.checklist.filter(c => c.Type === "pre").map(item => ({
-                        id: Number(item.ID),
-                        text: item.Text,
-                        checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true"
-                    }));
+                    appState.packingList = cloudData.checklist.filter(c => c.Type === "packing").map(item => ({ id: Number(item.ID), text: item.Text, checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true" }));
+                    appState.preTripList = cloudData.checklist.filter(c => c.Type === "pre").map(item => ({ id: Number(item.ID), text: item.Text, checked: item.Checked === true || item.Checked === "TRUE" || item.Checked === "true" }));
                 }
                 appState.lastUpdated = cloudTime;
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
                 renderAll();
             } else if (cloudTime < localTime || (cloudTime === 0 && isLocalRicher)) {
-                console.log("本地資料較新或雲端為空，將本機豐富進度推送同步至 Google Sheet...");
-                saveState(); // 資料傳送中
-                renderAll();
-            } else {
-                // 時間一致，安全渲染
-                renderAll();
-            }
+                saveState(); renderAll();
+            } else { renderAll(); }
         }
 
-        // --- 前端按鈕操作邏輯函數 ---
         function switchDay(d) { appState.activeDay = d; renderDayTabs(); renderDynamicItinerary(); }
         function addNewDay() {
             const days = Object.keys(appState.itinerary).map(Number);
@@ -910,13 +855,9 @@
 
         window.onload = function() {
             loadLocalBackup();
-            
-            // 每 15 秒自動在背景向 GAS 抓取最新進度，維持跨裝置同步
             if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "YOUR_GAS_WEB_APP_URL_HERE") {
                 syncWithGAS("get");
-                setInterval(() => {
-                    syncWithGAS("get");
-                }, 15000);
+                setInterval(() => { syncWithGAS("get"); }, 15000);
             }
         };
     </script>
