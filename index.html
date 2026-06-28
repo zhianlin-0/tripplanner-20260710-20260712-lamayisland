@@ -314,7 +314,7 @@
 
             days.forEach(dayNum => {
                 const isActive = dayNum === appState.activeDay;
-                let sub = dayNum === 1 ? "🌊 海波啟航" : dayNum === 2 ? "🐢 找綠蠵龜" : "✈️ 收心回台";
+                let sub = dayNum === 1 ? "🌊 Gogo海波" : dayNum === 2 ? "🐢 快樂下水" : "🥲 回家";
                 container.innerHTML += `<button onclick="switchDay(${dayNum})" class="shrink-0 px-4 py-2 rounded-full text-xs font-semibold border border-sand-200 transition-all ${isActive ? 'bg-ocean-600 text-white shadow-md scale-105' : 'bg-white text-sand-800 hover:bg-sand-100'}">DAY ${String(dayNum).padStart(2, '0')}<span class="block text-[9px] font-normal ${isActive ? 'opacity-90' : 'opacity-50'}">${sub}</span></button>`;
             });
             const dBtn = document.getElementById('delete-day-btn');
